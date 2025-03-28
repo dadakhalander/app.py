@@ -78,7 +78,6 @@ else:
     ax.legend()
     st.pyplot(fig)
 
-    # Additional analysis (example: descriptive statistics)
-    st.write(f"Cluster {selected_cluster} Detailed Statistics:")
+    # # Display cluster statistics in Streamlit
+    st.subheader(f"Cluster_k {selected_cluster} Statistics")
     st.write(cluster_data[['Age_original', 'Annual_Income (£K)_original', 'Spending_Score_original']].describe())
-    st.write("-" * 20)
