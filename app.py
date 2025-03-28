@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -7,27 +6,36 @@ import plotly.express as px
 def load_data():
     return pd.read_csv("clustered_data.csv")  # Replace with actual dataset path
 
+# Load data
 df = load_data()
 
-cluster_labels = sorted(df["Cluster"].unique())
-selected_cluster = st.sidebar.selectbox("Select Cluster", cluster_labels)
-
-if "Cluster" in df.columns:
-    cluster_labels = sorted(df["Cluster"].unique())
+# Ensure the "Cluster" column exists before using it
+if "Cluster" not in df.columns:
+    st.error("Error: Column 'Cluster' not found in DataFrame")
 else:
-    print("Column 'Cluster' not found in DataFrame")
+    # Retrieve unique cluster labels
+    cluster_labels = sorted(df["Cluster"].unique())
 
+    # Sidebar for cluster selection
+    selected_cluster = st.sidebar.selectbox("Select Cluster", cluster_labels)
 
-cluster_colors = {label: px.colors.qualitative.Set1[i] for i, label in enumerate(cluster_labels)}
-color = cluster_colors[selected_cluster]
+    # Filter data for the selected cluster
+    cluster_data = df[df["Cluster"] == selected_cluster]
 
-st.title(f"Cluster {selected_cluster} Analysis")
+    # Set colors for the clusters
+    cluster_colors = {label: px.colors.qualitative.Set1[i] for i, label in enumerate(cluster_labels)}
+    color = cluster_colors[selected_cluster]
 
-fig1 = px.histogram(cluster_data, x="Age_original", color="Gender_Male",
-                    nbins=30, title="Age Distribution",
-                    labels={"Gender_Male": "Gender"},
-                    color_discrete_map={0: color, 1: "gray"})
-st.plotly_chart(fig1)
+    # Set page title
+    st.title(f"Cluster {selected_cluster} Analysis")
 
-st.subheader(f"Cluster {selected_cluster} Statistics")
-st.write(cluster_data[['Age_original', 'Annual_Income (£K)_original', 'Spending_Score_original']].describe())
+    # Plot histogram of age distribution based on gender
+    fig1 = px.histogram(cluster_data, x="Age_original", color="Gender_Male",
+                        nbins=30, title="Age Distribution",
+                        labels={"Gender_Male": "Gender"},
+                        color_discrete_map={0: color, 1: "gray"})
+    st.plotly_chart(fig1)
+
+    # Display cluster statistics
+    st.subheader(f"Cluster {selected_cluster} Statistics")
+    st.write(cluster_data[['Age_original', 'Annual_Income (£K)_original', 'Spending_Score_original']].describe())
