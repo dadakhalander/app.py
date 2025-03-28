@@ -40,12 +40,13 @@ else:
     st.plotly_chart(fig1)
 
   
-
-    # Now, generate additional plots using Matplotlib and Seaborn for detailed cluster analysis
+ # Now, generate additional plots using Matplotlib and Seaborn for detailed cluster analysis
 
     # Define cluster colors for Matplotlib/Seaborn plots
     cluster_colors_matplotlib = {0: 'blue', 1: 'green', 2: 'red', 3: 'orange', 4: 'purple'}
 
+    # Age Distribution Analysis
+    st.subheader(f"Age Distribution - Cluster {selected_cluster}")
     # Plot Age distribution, divided by Gender_Male using Seaborn/Matplotlib
     fig, ax = plt.subplots(figsize=(15, 5))
     sns.histplot(cluster_data[cluster_data['Gender_Male'] == 0]['Age_original'],
@@ -56,6 +57,8 @@ else:
     ax.legend()
     st.pyplot(fig)
 
+    # Annual Income Distribution Analysis
+    st.subheader(f"Annual Income Distribution - Cluster {selected_cluster}")
     # Plot Annual Income distribution, divided by Gender_Male using Seaborn/Matplotlib
     fig, ax = plt.subplots(figsize=(15, 5))
     sns.histplot(cluster_data[cluster_data['Gender_Male'] == 0]['Annual_Income (£K)_original'],
@@ -66,6 +69,8 @@ else:
     ax.legend()
     st.pyplot(fig)
 
+    # Spending Score Distribution Analysis
+    st.subheader(f"Spending Score Distribution - Cluster {selected_cluster}")
     # Plot Spending Score distribution, divided by Gender_Male using Seaborn/Matplotlib
     fig, ax = plt.subplots(figsize=(15, 5))
     sns.histplot(cluster_data[cluster_data['Gender_Male'] == 0]['Spending_Score_original'],
@@ -75,6 +80,8 @@ else:
     ax.set_title(f'Spending Score Distribution - Cluster {selected_cluster}')
     ax.legend()
     st.pyplot(fig)
+
+  
 
     # # Display cluster statistics in Streamlit
     st.subheader(f"Cluster_k {selected_cluster} Statistics")
