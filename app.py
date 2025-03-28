@@ -39,9 +39,7 @@ else:
                         color_discrete_map={0: color, 1: "gray"})
     st.plotly_chart(fig1)
 
-    # Display cluster statistics in Streamlit
-    st.subheader(f"Cluster_k {selected_cluster} Statistics")
-    st.write(cluster_data[['Age_original', 'Annual_Income (£K)_original', 'Spending_Score_original']].describe())
+  
 
     # Now, generate additional plots using Matplotlib and Seaborn for detailed cluster analysis
 
