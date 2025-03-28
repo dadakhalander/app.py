@@ -12,7 +12,11 @@ df = load_data()
 cluster_labels = sorted(df["Cluster"].unique())
 selected_cluster = st.sidebar.selectbox("Select Cluster", cluster_labels)
 
-cluster_data = df[df["Cluster"] == selected_cluster]
+if "Cluster" in df.columns:
+    cluster_labels = sorted(df["Cluster"].unique())
+else:
+    print("Column 'Cluster' not found in DataFrame")
+
 
 cluster_colors = {label: px.colors.qualitative.Set1[i] for i, label in enumerate(cluster_labels)}
 color = cluster_colors[selected_cluster]
